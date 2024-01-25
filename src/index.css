@@ -1,0 +1,112 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+  --dark-red: #5f1010;
+  --dark-olive: #2e3929;
+  --med-gray: #b4b4b4;
+  --lt-gray: #d7d7d7;
+  --lt-blue: #2ddfe8;
+  --golden: gold;
+  --white: #f5f5f5;
+  --black: #121111;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    
+}
+
+.container-flex {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+img {
+    pointer-events: none;
+}
+
+.app-container {
+  max-width: 500px;
+  margin: 1em auto;
+  padding: 1em;
+  border-radius: 12px;
+  background-color: var(--lt-gray);
+}
+
+.indent {
+  padding-left: 1.5em;
+}
+
+.lighter-text {
+  color: var(--dark-olive);
+}
+
+/* =========================
+         INPUT STYLES
+   ========================= */
+
+
+.text-input {
+  padding: 0.4em 0.7em;
+  border-radius: 8px;
+  border: 1px solid var(--dark-olive);
+}
+
+.num-input {
+  max-width: 90px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* =========================
+        BUTTON STYLES
+   ========================= */
+
+.btn {
+  border-radius: 8px;
+  background-color: var(--dark-red);
+  color: var(--white);
+  border: none;
+  padding: 0.7em 1.5em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  background-color: var(--lt-blue);
+  color: var(--black);
+}
+
+.toggle-view-btn {
+    padding: 1em;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+
+
+
+
+footer {
+  margin-top: 3em;
+}
