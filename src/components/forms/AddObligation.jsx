@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export default function AddObligation({ character, editCharacter }) {
     const [ obligationName, setObligationName ] = useState("")
-    const [ obligationValue, setObligationValue ] = useState(0)
+    const [ obligationValue, setObligationValue ] = useState("")
 
 
     function handleObligationName(event) {

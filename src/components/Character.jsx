@@ -2,7 +2,11 @@ import { useState } from "react"
 import AddObligation from "./forms/AddObligation"
 import EditObligation from "./forms/EditObligation"
 
-export default function Character({ character, editCharacter }) {
+export default function Character({ 
+        character, 
+        editCharacter, 
+        deleteCharacter 
+    }) {
     const [ areDetailsOpen, setAreDetailsOpen ] = useState(false)
 
     const characterObligations = Object.entries(character).filter(entry => {
@@ -14,6 +18,16 @@ export default function Character({ character, editCharacter }) {
 
     function toggleCharacterDetails() {
         setAreDetailsOpen(prevState => !prevState)
+    }
+
+    function handleDeleteObligation(event) {
+        const keyToRemove = event.target.dataset.obligation
+        const newCharObj = {
+            ...character
+        }
+        delete newCharObj[keyToRemove]
+        
+        editCharacter(newCharObj)
     }
 
     return (
@@ -29,6 +43,10 @@ export default function Character({ character, editCharacter }) {
                 />
                 </button>
                 <h3>{character.name}</h3>
+                <button
+                    className="btn delete-btn"
+                    onClick={() => deleteCharacter(character)}
+                >Delete</button>
             </div>
             
             
@@ -47,7 +65,15 @@ export default function Character({ character, editCharacter }) {
                     
                     return (
                         <div key={name}>
-                        <p>{name}</p>
+                            <div className="container-flex">
+                                <p>{name}</p>
+                                <button
+                                    className="btn delete-btn"
+                                    data-obligation={obligationKey}
+                                    onClick={handleDeleteObligation}
+                                >Delete</button>
+                            </div>
+                        
                         <EditObligation 
                             character={character}
                             editCharacter={editCharacter}

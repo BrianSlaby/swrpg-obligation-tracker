@@ -74,7 +74,9 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
+
 }
 
 /* =========================
@@ -91,6 +93,10 @@ input[type=number] {
   cursor: pointer;
 }
 
+.btn:active {
+  transform: scale(0.95);
+}
+
 .secondary-btn {
   background-color: var(--lt-blue);
   color: var(--black);
@@ -103,9 +109,19 @@ input[type=number] {
     border: none;
 }
 
+.delete-btn {
+  background-color: transparent;
+  color: var(--dark-red);
+  justify-self: flex-end;
+  margin-left: auto;
+  transition: color 0.5s ease-in-out, border 0.2s;
+}
 
-
-
+.delete-btn:hover,
+.delete-btn:focus {
+  border: 2px solid red;
+  color: red;
+}
 
 footer {
   margin-top: 3em;

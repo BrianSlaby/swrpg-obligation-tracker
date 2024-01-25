@@ -22,7 +22,6 @@ export default function App() {
     } else {
       setCharacters([{ name }])
     }
-    
   }
 
   function editCharacter(currentCharacter) {
@@ -35,7 +34,13 @@ export default function App() {
         }
       })
     })
-    
+  }
+
+  function deleteCharacter(deletedCharacter) {
+    const updatedCharacters = characters.filter(character => {
+      return character.name !== deletedCharacter.name
+    })
+    setCharacters(updatedCharacters)
   }
 
   useEffect(() => {
@@ -44,7 +49,7 @@ export default function App() {
     }
   }, [characters])
 
-  
+
   return (
     <div className="app-container">
       <header>
@@ -79,9 +84,10 @@ export default function App() {
               }
               { characters && 
                 characters.map(character => <Character 
-                                                character={character}
-                                                key={character.name}
-                                                editCharacter={editCharacter}
+                                              character={character}
+                                              key={character.name}
+                                              editCharacter={editCharacter}
+                                              deleteCharacter={deleteCharacter}
                                             />)
               }
             </div>
