@@ -46,6 +46,8 @@ export default function App() {
   useEffect(() => {
     if (characters.length > 0) {
       localStorage.setItem("characters", JSON.stringify(characters))
+    } else if (characters.length === 0) {
+      localStorage.setItem("characters", JSON.stringify([]))
     }
   }, [characters])
 
