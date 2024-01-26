@@ -69,8 +69,11 @@ export default function App() {
                 src={`/icons/angle-${toggleIcon}-solid.svg`}
                 alt=""
               />
+
+              <span 
+                className="manage-characters-span"
+              >Manage Player Characters</span>
             </button>
-            <h2>Manage Player Characters</h2>
           </div>
 
           {isCharListOpen &&
@@ -98,7 +101,9 @@ export default function App() {
           }
         </div>
         
-        <ObligationChart />
+        <ObligationChart 
+          characters={characters}
+        />
 
       </main>
       <Footer />

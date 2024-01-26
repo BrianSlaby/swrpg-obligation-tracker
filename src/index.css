@@ -13,6 +13,7 @@
   --golden: gold;
   --white: #f5f5f5;
   --black: #121111;
+  --main-font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 html,
@@ -20,7 +21,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--white);
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: var(--main-font);
     
 }
 
@@ -28,10 +29,15 @@ body {
   display: flex;
   gap: 0.5em;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 img {
     pointer-events: none;
+}
+
+footer {
+  margin-top: 3em;
 }
 
 .app-container {
@@ -59,6 +65,7 @@ img {
   padding: 0.4em 0.7em;
   border-radius: 8px;
   border: 1px solid var(--dark-olive);
+  flex-shrink: 2;
 }
 
 .num-input {
@@ -91,6 +98,7 @@ input[type=number] {
   padding: 0.7em 1.5em;
   text-transform: uppercase;
   cursor: pointer;
+  font-family: var(--main-font);
 }
 
 .btn:active {
@@ -107,6 +115,7 @@ input[type=number] {
     cursor: pointer;
     background-color: transparent;
     border: none;
+    font-family: var(--main-font);
 }
 
 .delete-btn {
@@ -123,6 +132,42 @@ input[type=number] {
   color: red;
 }
 
-footer {
-  margin-top: 3em;
+.manage-characters-span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-left: 0.75em;
+}
+
+.character-name-span {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-left: 1em;
+}
+
+/* =========================
+         TABLE STYLES
+   ========================= */
+
+.obligation-table {
+  border-radius: 12px;
+  padding: 0.2em 2em 1.5em;
+  margin: 0.5em auto;
+  background-color: var(--med-gray);
+  box-shadow: 2px 2px 4px var(--dark-olive);
+  text-shadow: 0 0 2px var(--white);
+}
+  
+.name-table {
+  margin-bottom: 0.2em;
+  text-decoration: underline;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.obligation-range {
+  font-weight: 700;
+}
+
+.obligation-type {
+  color: var(--dark-olive);
 }

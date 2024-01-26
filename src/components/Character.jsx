@@ -41,8 +41,9 @@ export default function Character({
                     src={`/icons/angle-${toggleIcon}-solid.svg`}
                     alt=""
                 />
+                <span className="character-name-span">{character.name}</span>
                 </button>
-                <h3>{character.name}</h3>
+                
                 <button
                     className="btn delete-btn"
                     onClick={() => deleteCharacter(character)}
