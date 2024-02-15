@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { addNewObligationToDB } from "../../firebase/firestore"
 
 export default function AddObligation({ character, editCharacter }) {
     const [ obligationName, setObligationName ] = useState("")
@@ -17,16 +18,13 @@ export default function AddObligation({ character, editCharacter }) {
         event.preventDefault()
 
         if (obligationName && obligationValue) {
-            const newObligationNum = Object.keys(character).length
+            const newObligationNum = Object.keys(character.obligations).length
             const newKeyName = `obligation${newObligationNum}`
-            const newCharacterObj = {
-                ...character,
-                [newKeyName]: {
-                    name: obligationName,
-                    value: obligationValue
-                }
+            const newObligationObj = {
+                name: obligationName,
+                value: obligationValue
             }
-            editCharacter(newCharacterObj)
+            addNewObligationToDB(newObligationObj, newKeyName, character.id)
             setObligationName("")
             setObligationValue("")
         }

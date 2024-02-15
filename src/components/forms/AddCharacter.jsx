@@ -1,6 +1,7 @@
 import { useState } from "react"
+import { addNewCharacterToDB } from "../../firebase/firestore"
 
-export default function AddCharacter({ saveCharacter }) {
+export default function AddCharacter({ user }) {
     const [ inputValue, setInputValue ] = useState("")
 
     function handleInputValue(event) {
@@ -11,7 +12,8 @@ export default function AddCharacter({ saveCharacter }) {
         event.preventDefault()
 
         if (inputValue) {
-            saveCharacter(inputValue)
+            // saveCharacter(inputValue)
+            addNewCharacterToDB(inputValue, user)
             setInputValue("")
         }
     }

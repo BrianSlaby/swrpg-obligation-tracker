@@ -9,7 +9,7 @@ export default function Character({
     }) {
     const [ areDetailsOpen, setAreDetailsOpen ] = useState(false)
 
-    const characterObligations = Object.entries(character).filter(entry => {
+    const characterObligations = Object.entries(character.obligations).filter(entry => {
         return entry[0] !== "name"
     })
     // [[key1, value1], [key2, value2]]

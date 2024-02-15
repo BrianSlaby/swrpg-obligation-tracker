@@ -4,9 +4,8 @@ import AddCharacter from "../components/forms/AddCharacter"
 import Character from "../components/Character"
 import ObligationChart from "../components/ObligationChart"
 
-export default function Home() {
+export default function Home({ characters, setCharacters, user }) {
     const [ isCharListOpen, setIsCharListOpen ] = useState(false)
-    const [ characters, setCharacters ] = useState(JSON.parse(localStorage.getItem("characters")) || [])
 
     const toggleIcon = isCharListOpen ? "up" : "down"
 
@@ -14,15 +13,19 @@ export default function Home() {
         setIsCharListOpen(prevState => !prevState)
     }
 
-    function saveCharacterName(name) {
-        if (characters.length > 0) {
-        setCharacters(prevState => {
-            return [ ...prevState, { name } ]
-        })
-        } else {
-        setCharacters([{ name }])
-        }
-    }
+
+
+    // This be handled in AddCharacter, delete when confirmed functional
+    
+    // function saveCharacterName(name) {
+    //     if (characters.length > 0) {
+    //     setCharacters(prevState => {
+    //         return [ ...prevState, { name } ]
+    //     })
+    //     } else {
+    //     setCharacters([{ name }])
+    //     }
+    // }
 
     function editCharacter(currentCharacter) {
         setCharacters(allCharacters => {
@@ -36,6 +39,7 @@ export default function Home() {
         })
     }
 
+    // this will basically get deleted; Character component will handle deleting
     function deleteCharacter(deletedCharacter) {
         const updatedCharacters = characters.filter(character => {
         return character.name !== deletedCharacter.name
@@ -43,6 +47,9 @@ export default function Home() {
         setCharacters(updatedCharacters)
     }
 
+
+
+    // This will be deleted; snapshot listener in App will replace this
     useEffect(() => {
         if (characters.length > 0) {
         localStorage.setItem("characters", JSON.stringify(characters))
@@ -74,7 +81,7 @@ export default function Home() {
           {isCharListOpen &&
           <div className="character-edit-container">
             <AddCharacter 
-              saveCharacter={saveCharacterName}
+              user={user}
             />
 
             <div className="character-list-container">
