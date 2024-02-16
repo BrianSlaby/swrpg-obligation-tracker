@@ -16,10 +16,10 @@ export default function AddObligation({ character, editCharacter }) {
 
     function handleObligationSubmit(event) {
         event.preventDefault()
-
+            // need a different way of naming newObligationNum
         if (obligationName && obligationValue) {
-            const newObligationNum = Object.keys(character.obligations).length
-            const newKeyName = `obligation${newObligationNum}`
+            //const newObligationNum = Object.keys(character.obligations).length
+            const newKeyName = `obligation_${obligationName}`
             const newObligationObj = {
                 name: obligationName,
                 value: obligationValue
