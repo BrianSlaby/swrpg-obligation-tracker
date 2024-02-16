@@ -11,9 +11,9 @@ import {
     getDoc, 
     getDocs,
     deleteDoc
- } from "firebase/firestore"
+} from "firebase/firestore"
 
- const db = getFirestore(app)
+const db = getFirestore(app)
 
  // Right now the functions are directly setting the characters state,
  // and a useEffect saves to localStorage whenever characters changes.
@@ -22,7 +22,7 @@ import {
  // updating state when firebase changes.
 
 
- async function addNewCharacterToDB(newCharacterName, user) {
+async function addNewCharacterToDB(newCharacterName, user) {
     const docRef = await addDoc(collection(db, "characters"), {
         name: newCharacterName,
         uid: user.uid,
@@ -41,7 +41,17 @@ async function addNewObligationToDB(
     });
 }
 
-// update obligation
+async function updateObligationValueInDB(
+    updatedObligation, 
+    updatedValue, 
+    characterId
+) {
+    const characterRef = doc(db, "characters", characterId);
+    await updateDoc(characterRef, {
+        [`obligations.${updatedObligation}.value`]: updatedValue
+    });
+}
+
 
 // delete obligation
 
@@ -53,5 +63,6 @@ async function addNewObligationToDB(
 export {
     db,
     addNewCharacterToDB,
-    addNewObligationToDB
+    addNewObligationToDB,
+    updateObligationValueInDB
 }

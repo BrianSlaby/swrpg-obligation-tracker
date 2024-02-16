@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { updateObligationValueInDB } from "../../firebase/firestore"
 
 export default function EditObligation({ 
     character, 
@@ -17,14 +18,17 @@ export default function EditObligation({
         event.preventDefault()
 
         if (newObligationValue) {
-            const newCharacterObj = {
-                ...character,
-                [obligationKey]: {
-                    name: name,
-                    value: newObligationValue
-                }
-            }
-            editCharacter(newCharacterObj)
+
+            updateObligationValueInDB(obligationKey, newObligationValue, character.id)
+
+            // const newCharacterObj = {
+            //     ...character,
+            //     [obligationKey]: {
+            //         name: name,
+            //         value: newObligationValue
+            //     }
+            // }
+            // editCharacter(newCharacterObj)
             setNewObligationValue("")
         }
     }
