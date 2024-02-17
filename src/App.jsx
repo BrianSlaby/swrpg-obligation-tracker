@@ -11,7 +11,7 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Footer from "./components/Footer"
 import { auth } from "./firebase/authentication"
-import { db } from "./firebase/firestore"
+import { db, fetchCharacters } from "./firebase/firestore"
 
 export default function App() {
   const [ userLoggedIn, setUserLoggedIn ] = useState(false)
@@ -26,16 +26,12 @@ export default function App() {
         // user.displayName
         setUser(user)
         setUserLoggedIn(true)
-
-        // already have the async above
-        // CODE FROM SHOPPING HELPER
-        // const listsData = await fetchLists(user)
-        // setLists(listsData)
-
+        const charactersData = await fetchCharacters(user)
+        setCharacters(charactersData)
       } else {
         setUserLoggedIn(false)
         setUser(null)
-        // setLists([])
+        setCharacters([])
       }
     });
     return () => unsubscribe();
@@ -49,7 +45,6 @@ export default function App() {
         querySnapshot.forEach((doc) => {
           const data = doc.data()
           const id = doc.id
-          //const sortedItems = sortItems(data.items)
 
           characterData.push({ ...data, id })
         });
@@ -74,7 +69,6 @@ export default function App() {
         userLoggedIn ? 
         <Home 
           characters={characters}
-          setCharacters={setCharacters}
           user={user}
         /> :
         <Login />

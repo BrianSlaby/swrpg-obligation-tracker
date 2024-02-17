@@ -6,11 +6,7 @@ import {
 import AddObligation from "./forms/AddObligation"
 import EditObligation from "./forms/EditObligation"
 
-export default function Character({ 
-        character, 
-        editCharacter, 
-        deleteCharacter 
-    }) {
+export default function Character({ character }) {
     const [ areDetailsOpen, setAreDetailsOpen ] = useState(false)
 
     const characterObligations = Object.entries(character.obligations).filter(entry => {
@@ -54,7 +50,6 @@ export default function Character({
             {areDetailsOpen &&
              <AddObligation 
                 character={character}
-                editCharacter={editCharacter}
              />
             }
 
@@ -77,9 +72,7 @@ export default function Character({
                         
                         <EditObligation 
                             character={character}
-                            editCharacter={editCharacter}
                             obligationKey={obligationKey}
-                            name={name}
                             value={value}
                             />
                     </div>
@@ -87,7 +80,6 @@ export default function Character({
             })
         }
 
-    
             <hr></hr>
         </div>
     )

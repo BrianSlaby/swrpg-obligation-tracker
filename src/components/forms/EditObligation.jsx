@@ -3,9 +3,7 @@ import { updateObligationValueInDB } from "../../firebase/firestore"
 
 export default function EditObligation({ 
     character, 
-    editCharacter, 
     obligationKey, 
-    name,
     value 
     }) {
     const [newObligationValue, setNewObligationValue] = useState("")

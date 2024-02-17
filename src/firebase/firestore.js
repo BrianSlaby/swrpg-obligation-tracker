@@ -16,13 +16,6 @@ import {
 
 const db = getFirestore(app)
 
- // Right now the functions are directly setting the characters state,
- // and a useEffect saves to localStorage whenever characters changes.
-
- // Firebase needs to be source of truth, with snapshot listener
- // updating state when firebase changes.
-
-
 async function addNewCharacterToDB(newCharacterName, user) {
     const docRef = await addDoc(collection(db, "characters"), {
         name: newCharacterName,
@@ -64,8 +57,18 @@ async function deleteCharacterFromDB(characterId) {
     await deleteDoc(doc(db, "characters", characterId));
 }
 
-// fetch characters
-    // need to fetch characters in onAuthStateChanged, then setCharacters
+async function fetchCharacters(user) {
+    const q = query(collection(db, "characters"), where("uid", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    const charactersArray = []
+    querySnapshot.forEach((doc) => {
+        const data = doc.data()
+        const id = doc.id
+        
+        charactersArray.push({ ...data, id })
+    });
+    return charactersArray
+}
 
 export {
     db,
@@ -73,5 +76,6 @@ export {
     addNewObligationToDB,
     updateObligationValueInDB,
     deleteObligationFromDB,
-    deleteCharacterFromDB
+    deleteCharacterFromDB,
+    fetchCharacters
 }
