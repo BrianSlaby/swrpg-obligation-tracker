@@ -10,7 +10,7 @@ This obligation tracker is designed to automate most of the book keeping.  Click
 
 ## Note on Data
 
-This app saves user data using the browser's local storage.  Clearing your browser cache will delete all data.  
+This app saves user data using a Google Firebase Firestore database.  Users are required to create an account using email and password.  Credentials are managed by Google Firebase, and are only used for this specific app.
 
 ## Note on Styling
 
