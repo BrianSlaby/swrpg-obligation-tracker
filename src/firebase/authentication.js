@@ -9,26 +9,9 @@ import {
 
 const auth = getAuth(app);
 
-// function authCreateAccountWithEmail(email, password) {
-//     return createUserWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//         const user = userCredential.user;   
-//         // do we need the user variable?
-//     })
-//     .catch((error) => {
-//         const errorCode = error.code;
-//         const errorMessage = error.message;
-//         console.error(`${errorCode}: ${errorMessage}`)
-//         throw error
-//     });
-// }
-
 async function authCreateAccountWithEmail(email, password) {
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-        
-        const user = userCredential.user
-        return user
+        await createUserWithEmailAndPassword(auth, email, password)
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -37,27 +20,26 @@ async function authCreateAccountWithEmail(email, password) {
     }
 }
 
-function authSignInWithEmail(email, password) {
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        const user = userCredential.user;
-        // do we need the user variable?
-    })
-    .catch((error) => {
+async function authSignInWithEmail(email, password) {
+    try {
+        await signInWithEmailAndPassword(auth, email, password)
+    } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(`${errorCode}: ${errorMessage}`)
-    });
+        throw error
+    }
 }
 
-function authSignOut() {
-    signOut(auth).then(() => {
-        // Sign-out successful.
-      }).catch((error) => {
+async function authSignOut() {
+    try {
+        await signOut(auth)
+    } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(`${errorCode}: ${errorMessage}`)
-      });
+        throw error
+    }
 }
 
 export {

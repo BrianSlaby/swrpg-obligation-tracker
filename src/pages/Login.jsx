@@ -6,6 +6,7 @@ export default function Login() {
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
     const [ isModalOpen, setIsModalOpen ] = useState(false)
+    const [ errorMessage, setErrorMessage ] = useState("")
 
     function handleEmailChange(event) {
         setEmail(event.target.value)
@@ -15,11 +16,16 @@ export default function Login() {
         setPassword(event.target.value)
     }
 
-    function handleSignInWithEmail(event) {
+    async function handleSignInWithEmail(event) {
         event.preventDefault()
-        authSignInWithEmail(email, password)
-        setEmail("")
-        setPassword("")
+        try {
+            await authSignInWithEmail(email, password)
+            setEmail("")
+            setPassword("")
+            setErrorMessage("")
+        } catch(error) {
+            setErrorMessage(error.message)
+        }
     }
 
     function handleOpenAccountModal() {
@@ -57,6 +63,9 @@ export default function Login() {
                     onClick={handleSignInWithEmail}
                 >Sign In</button>
             </form>
+
+            { errorMessage && 
+                <p className="error-text"> {errorMessage} </p>}
 
             <button
                 id="open-account-modal-btn"

@@ -11,16 +11,26 @@ export default function CreateAccountModal({ isOpen, closeModal }) {
 
     const modalRef = useRef(null)
 
+    function resetModalFields() {
+        setErrorMessage("")
+        setEmail("")
+        setPassword("")
+        setConfirmPassword("")
+    }
+
     function handleCloseModal() {
         if (closeModal) {
             closeModal()
+            setIsModalOpen(false)
+            resetModalFields()
         }
-        setIsModalOpen(false)
     }
 
     function handleKeydown(event) {
         if (event.key === "Escape") {
             handleCloseModal()
+            setIsModalOpen(false)
+            resetModalFields()
         }
     }
 
@@ -41,10 +51,7 @@ export default function CreateAccountModal({ isOpen, closeModal }) {
         if (password === confirmPassword) {
             try {
                 await authCreateAccountWithEmail(email, password)
-                setErrorMessage("")
-                setEmail("")
-                setPassword("")
-                setConfirmPassword("")
+                resetModalFields()
             } catch (error) {
                 setErrorMessage(error.message)
             }
