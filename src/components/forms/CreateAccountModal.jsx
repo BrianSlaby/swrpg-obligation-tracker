@@ -76,34 +76,37 @@ export default function CreateAccountModal({ isOpen, closeModal }) {
             onKeyDown={handleKeydown}
             ref={modalRef}
         >
+        <div className="modal-inner">
+
+            <h2>Create Account</h2>
 
             <form className="auth-form">
                 <input 
-                    className="text-input" 
+                    className="text-input auth-input" 
                     id="email-input" 
                     type="email" 
                     placeholder="Email" 
                     value={email} 
                     onChange={handleEmailChange} 
-                />
+                    />
 
                 <input 
-                    className="text-input" 
+                    className="text-input auth-input" 
                     id="password-input" 
                     type="password" 
                     placeholder="Password" 
                     value={password} 
                     onChange={handlePasswordChange} 
-                />
+                    />
 
                 <input 
-                    className="text-input" 
+                    className="text-input auth-input" 
                     id="confirm-password-input" 
                     type="password" 
                     placeholder="Confirm Password" 
                     value={confirmPassword} 
                     onChange={handleConfirmPasswordChange} 
-                />
+                    />
 
                 { passwordWarning && 
                 <p className="password-warning">
@@ -111,16 +114,17 @@ export default function CreateAccountModal({ isOpen, closeModal }) {
 
                 <button 
                     id="create-acct-btn" 
-                    className="btn primary-btn" 
+                    className="btn primary-btn auth-btn" 
                     onClick={handleCreateAccountWithEmail}
-                >Create Account</button>
+                    >Create Account</button>
             </form>
             
             <button
-                className="btn secondary-btn"
+                className="btn secondary-btn auth-btn"
                 onClick={handleCloseModal}
-            >Close</button>
+                >Close</button>
     
+        </div>
         </dialog>
     )
 }

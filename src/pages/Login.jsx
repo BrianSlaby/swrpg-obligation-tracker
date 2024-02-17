@@ -34,7 +34,7 @@ export default function Login() {
         <div className="login-container">
             <form className="auth-form">
                 <input 
-                    className="text-input" 
+                    className="text-input auth-input" 
                     id="email-input" 
                     type="email" 
                     placeholder="Email" 
@@ -43,7 +43,7 @@ export default function Login() {
                 />
 
                 <input 
-                    className="text-input" 
+                    className="text-input auth-input" 
                     id="password-input" 
                     type="password" 
                     placeholder="Password" 
@@ -53,14 +53,14 @@ export default function Login() {
 
                 <button 
                     id="sign-in-btn" 
-                    className="btn primary-btn"
+                    className="btn primary-btn auth-btn"
                     onClick={handleSignInWithEmail}
                 >Sign In</button>
             </form>
 
             <button
                 id="open-account-modal-btn"
-                className="btn secondary-btn"
+                className="btn secondary-btn auth-btn"
                 onClick={handleOpenAccountModal}
             >Create Account</button>
 

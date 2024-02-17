@@ -30,7 +30,7 @@ export default function AddCharacter({ user }) {
             />
             <button
                 id="character-name-submit-btn"
-                className="btn"
+                className="btn primary-btn"
                 onClick={handleNameSubmit}
             >Add Character</button>
         </form>

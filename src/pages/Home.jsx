@@ -61,7 +61,7 @@ export default function Home({ characters, user }) {
 
         <button
             id="sign-out-btn"
-            className="btn secondary-btn"
+            className="btn secondary-btn auth-btn"
             onClick={authSignOut}
         >Sign Out</button>
 

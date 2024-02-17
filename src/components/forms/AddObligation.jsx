@@ -46,7 +46,7 @@ export default function AddObligation({ character }) {
                 onChange={handleObligationValue}
             />
             <button
-                className="btn"
+                className="btn primary-btn"
                 onClick={handleObligationSubmit}
             >Add Obligation</button>
         </form>

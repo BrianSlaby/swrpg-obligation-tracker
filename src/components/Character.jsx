@@ -60,7 +60,7 @@ export default function Character({ character }) {
                     const value = obligation[1].value
                     
                     return (
-                        <div key={name}>
+                        <div key={name} className="obligation-container">
                             <div className="container-flex">
                                 <p>{name}</p>
                                 <button
@@ -74,7 +74,8 @@ export default function Character({ character }) {
                             character={character}
                             obligationKey={obligationKey}
                             value={value}
-                            />
+                        />
+                        
                     </div>
                 )
             })
