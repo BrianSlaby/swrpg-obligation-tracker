@@ -9,7 +9,7 @@ export default function ObligationChart({ characters }) {
 
             const charactersArray = [...characters]
             const newArray = charactersArray.map(character => {
-                const characterObligations = Object.entries(character).filter(entry => entry[0] !== "name")
+                const characterObligations = Object.entries(character.obligations).filter(entry => entry[0] !== "name")
     
                 const updatedObligations = characterObligations.map(obligation => {
                     const keyName = obligation[0]

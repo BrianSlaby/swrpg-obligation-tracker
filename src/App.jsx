@@ -1,56 +1,63 @@
 import { useState, useEffect } from "react"
-import AddCharacter from "./components/forms/AddCharacter"
-import Character from "./components/Character"
-import ObligationChart from "./components/ObligationChart"
+import { onAuthStateChanged } from "firebase/auth"
+import {  
+  doc,
+  collection,
+  query,
+  where,
+  onSnapshot
+} from "firebase/firestore"
+import Home from "./pages/Home"
+import Login from "./pages/Login"
 import Footer from "./components/Footer"
+import { auth } from "./firebase/authentication"
+import { db, fetchCharacters } from "./firebase/firestore"
 
 export default function App() {
-  const [ isCharListOpen, setIsCharListOpen ] = useState(false)
-  const [ characters, setCharacters ] = useState(JSON.parse(localStorage.getItem("characters")) || [])
-
-  const toggleIcon = isCharListOpen ? "up" : "down"
-
-  function toggleCharacterView() {
-    setIsCharListOpen(prevState => !prevState)
-  }
-
-  function saveCharacterName(name) {
-    if (characters.length > 0) {
-      setCharacters(prevState => {
-        return [ ...prevState, { name } ]
-      })
-    } else {
-      setCharacters([{ name }])
-    }
-  }
-
-  function editCharacter(currentCharacter) {
-    setCharacters(allCharacters => {
-      return allCharacters.map(character => {
-        if (character.name === currentCharacter.name) {
-          return currentCharacter
-        } else {
-          return character
-        }
-      })
-    })
-  }
-
-  function deleteCharacter(deletedCharacter) {
-    const updatedCharacters = characters.filter(character => {
-      return character.name !== deletedCharacter.name
-    })
-    setCharacters(updatedCharacters)
-  }
+  const [ userLoggedIn, setUserLoggedIn ] = useState(false)
+  const [ user, setUser ] = useState(null)
+  const [ characters, setCharacters ] = useState([])
 
   useEffect(() => {
-    if (characters.length > 0) {
-      localStorage.setItem("characters", JSON.stringify(characters))
-    } else if (characters.length === 0) {
-      localStorage.setItem("characters", JSON.stringify([]))
-    }
-  }, [characters])
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const uid = user.uid;
+        // user.email
+        // user.displayName
+        setUser(user)
+        setUserLoggedIn(true)
+        const charactersData = await fetchCharacters(user)
+        setCharacters(charactersData)
+      } else {
+        setUserLoggedIn(false)
+        setUser(null)
+        setCharacters([])
+      }
+    });
+    return () => unsubscribe();
+  }, [])
 
+  useEffect(() => {
+    if (user) {
+      const q = query(collection(db, "characters"), where("uid", "==", user.uid));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const characterData = []
+        querySnapshot.forEach((doc) => {
+          const data = doc.data()
+          const id = doc.id
+
+          characterData.push({ ...data, id })
+        });
+        setCharacters(characterData)
+      },
+      (error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(`${errorCode}: ${errorMessage}`)
+      });
+      return () => unsubscribe()
+    }
+  }, [user])
 
   return (
     <div className="app-container">
@@ -58,55 +65,36 @@ export default function App() {
         <h1>Star Wars: Edge of the Empire Obligation Tracker</h1>
       </header>
 
-      <main>
-        <div className="character-management-container">
-          <div className="container-flex">
-            <button
-              className="toggle-view-btn"
-              onClick={toggleCharacterView}
-            >
-              <img 
-                src={`/icons/angle-${toggleIcon}-solid.svg`}
-                alt=""
-              />
-
-              <span 
-                className="manage-characters-span"
-              >Manage Player Characters</span>
-            </button>
-          </div>
-
-          {isCharListOpen &&
-          <div className="character-edit-container">
-            <AddCharacter 
-              saveCharacter={saveCharacterName}
-            />
-
-            <div className="character-list-container">
-              { characters.length < 1 &&
-                <p>Add Player Characters</p>
-
-              }
-              { characters && 
-                characters.map(character => <Character 
-                                              character={character}
-                                              key={character.name}
-                                              editCharacter={editCharacter}
-                                              deleteCharacter={deleteCharacter}
-                                            />)
-              }
-            </div>
-
-          </div>
-          }
-        </div>
-        
-        <ObligationChart 
+      {
+        userLoggedIn ? 
+        <Home 
           characters={characters}
-        />
-
-      </main>
+          user={user}
+        /> :
+        <Login />
+      }
+      
       <Footer />
     </div>
   )
 }
+
+
+ /*   
+    OLD DATA STRUCTURE
+
+    characters = [
+      {
+        name: "Dafro Jenkins",
+        obligation1: { name: "criminal", value: "10" },
+        obligation2: { name: "public figure", value: "5" }
+      }, 
+      {
+        name: "Slam Bash",
+        obligation1: { name: "No head", value: "56" }
+      }
+    ]
+
+    anywhere in old code with character.obligation1 would now be character.obligations.obligation1
+
+ */

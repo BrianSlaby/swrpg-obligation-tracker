@@ -1,6 +1,7 @@
 import { useState } from "react"
+import { addNewObligationToDB } from "../../firebase/firestore"
 
-export default function AddObligation({ character, editCharacter }) {
+export default function AddObligation({ character }) {
     const [ obligationName, setObligationName ] = useState("")
     const [ obligationValue, setObligationValue ] = useState("")
 
@@ -15,18 +16,14 @@ export default function AddObligation({ character, editCharacter }) {
 
     function handleObligationSubmit(event) {
         event.preventDefault()
-
+        
         if (obligationName && obligationValue) {
-            const newObligationNum = Object.keys(character).length
-            const newKeyName = `obligation${newObligationNum}`
-            const newCharacterObj = {
-                ...character,
-                [newKeyName]: {
-                    name: obligationName,
-                    value: obligationValue
-                }
+            const newKeyName = `obligation_${obligationName}`
+            const newObligationObj = {
+                name: obligationName,
+                value: obligationValue
             }
-            editCharacter(newCharacterObj)
+            addNewObligationToDB(newObligationObj, newKeyName, character.id)
             setObligationName("")
             setObligationValue("")
         }
@@ -49,7 +46,7 @@ export default function AddObligation({ character, editCharacter }) {
                 onChange={handleObligationValue}
             />
             <button
-                className="btn"
+                className="btn primary-btn"
                 onClick={handleObligationSubmit}
             >Add Obligation</button>
         </form>

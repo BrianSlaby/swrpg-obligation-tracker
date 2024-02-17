@@ -1,15 +1,15 @@
 import { useState } from "react"
+import { 
+    deleteObligationFromDB, 
+    deleteCharacterFromDB 
+} from "../firebase/firestore"
 import AddObligation from "./forms/AddObligation"
 import EditObligation from "./forms/EditObligation"
 
-export default function Character({ 
-        character, 
-        editCharacter, 
-        deleteCharacter 
-    }) {
+export default function Character({ character }) {
     const [ areDetailsOpen, setAreDetailsOpen ] = useState(false)
 
-    const characterObligations = Object.entries(character).filter(entry => {
+    const characterObligations = Object.entries(character.obligations).filter(entry => {
         return entry[0] !== "name"
     })
     // [[key1, value1], [key2, value2]]
@@ -22,12 +22,8 @@ export default function Character({
 
     function handleDeleteObligation(event) {
         const keyToRemove = event.target.dataset.obligation
-        const newCharObj = {
-            ...character
-        }
-        delete newCharObj[keyToRemove]
-        
-        editCharacter(newCharObj)
+
+        deleteObligationFromDB(keyToRemove, character.id)
     }
 
     return (
@@ -46,7 +42,7 @@ export default function Character({
                 
                 <button
                     className="btn delete-btn"
-                    onClick={() => deleteCharacter(character)}
+                    onClick={() => deleteCharacterFromDB(character.id)}
                 >Delete</button>
             </div>
             
@@ -54,7 +50,6 @@ export default function Character({
             {areDetailsOpen &&
              <AddObligation 
                 character={character}
-                editCharacter={editCharacter}
              />
             }
 
@@ -65,7 +60,7 @@ export default function Character({
                     const value = obligation[1].value
                     
                     return (
-                        <div key={name}>
+                        <div key={name} className="obligation-container">
                             <div className="container-flex">
                                 <p>{name}</p>
                                 <button
@@ -77,17 +72,15 @@ export default function Character({
                         
                         <EditObligation 
                             character={character}
-                            editCharacter={editCharacter}
                             obligationKey={obligationKey}
-                            name={name}
                             value={value}
-                            />
+                        />
+                        
                     </div>
                 )
             })
         }
 
-    
             <hr></hr>
         </div>
     )
