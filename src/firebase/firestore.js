@@ -6,6 +6,7 @@ import {
     addDoc,
     updateDoc,
     collection, 
+    deleteField,
     query, 
     where,
     getDoc, 
@@ -52,10 +53,16 @@ async function updateObligationValueInDB(
     });
 }
 
+async function deleteObligationFromDB(deletedObligation, characterId) {
+    const characterRef = doc(db, "characters", characterId);
+    await updateDoc(characterRef, {
+        [`obligations.${deletedObligation}`]: deleteField()
+    });
+}
 
-// delete obligation
-
-// delete character
+async function deleteCharacterFromDB(characterId) {
+    await deleteDoc(doc(db, "characters", characterId));
+}
 
 // fetch characters
     // need to fetch characters in onAuthStateChanged, then setCharacters
@@ -64,5 +71,7 @@ export {
     db,
     addNewCharacterToDB,
     addNewObligationToDB,
-    updateObligationValueInDB
+    updateObligationValueInDB,
+    deleteObligationFromDB,
+    deleteCharacterFromDB
 }

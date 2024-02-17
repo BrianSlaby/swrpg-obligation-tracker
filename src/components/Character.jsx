@@ -1,4 +1,8 @@
 import { useState } from "react"
+import { 
+    deleteObligationFromDB, 
+    deleteCharacterFromDB 
+} from "../firebase/firestore"
 import AddObligation from "./forms/AddObligation"
 import EditObligation from "./forms/EditObligation"
 
@@ -22,12 +26,8 @@ export default function Character({
 
     function handleDeleteObligation(event) {
         const keyToRemove = event.target.dataset.obligation
-        const newCharObj = {
-            ...character
-        }
-        delete newCharObj[keyToRemove]
-        
-        editCharacter(newCharObj)
+
+        deleteObligationFromDB(keyToRemove, character.id)
     }
 
     return (
@@ -46,7 +46,7 @@ export default function Character({
                 
                 <button
                     className="btn delete-btn"
-                    onClick={() => deleteCharacter(character)}
+                    onClick={() => deleteCharacterFromDB(character.id)}
                 >Delete</button>
             </div>
             

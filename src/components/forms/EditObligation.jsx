@@ -20,15 +20,6 @@ export default function EditObligation({
         if (newObligationValue) {
 
             updateObligationValueInDB(obligationKey, newObligationValue, character.id)
-
-            // const newCharacterObj = {
-            //     ...character,
-            //     [obligationKey]: {
-            //         name: name,
-            //         value: newObligationValue
-            //     }
-            // }
-            // editCharacter(newCharacterObj)
             setNewObligationValue("")
         }
     }

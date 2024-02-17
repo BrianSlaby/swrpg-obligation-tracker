@@ -39,14 +39,6 @@ export default function Home({ characters, setCharacters, user }) {
         })
     }
 
-    // this will basically get deleted; Character component will handle deleting
-    function deleteCharacter(deletedCharacter) {
-        const updatedCharacters = characters.filter(character => {
-        return character.name !== deletedCharacter.name
-        })
-        setCharacters(updatedCharacters)
-    }
-
 
 
     // This will be deleted; snapshot listener in App will replace this
@@ -94,7 +86,6 @@ export default function Home({ characters, setCharacters, user }) {
                                               character={character}
                                               key={character.name}
                                               editCharacter={editCharacter}
-                                              deleteCharacter={deleteCharacter}
                                             />)
               }
             </div>
