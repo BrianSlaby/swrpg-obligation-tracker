@@ -9,17 +9,32 @@ import {
 
 const auth = getAuth(app);
 
-function authCreateAccountWithEmail(email, password) {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        const user = userCredential.user;   
-        // do we need the user variable?
-    })
-    .catch((error) => {
+// function authCreateAccountWithEmail(email, password) {
+//     return createUserWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//         const user = userCredential.user;   
+//         // do we need the user variable?
+//     })
+//     .catch((error) => {
+//         const errorCode = error.code;
+//         const errorMessage = error.message;
+//         console.error(`${errorCode}: ${errorMessage}`)
+//         throw error
+//     });
+// }
+
+async function authCreateAccountWithEmail(email, password) {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+        
+        const user = userCredential.user
+        return user
+    } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(`${errorCode}: ${errorMessage}`)
-    });
+        throw error
+    }
 }
 
 function authSignInWithEmail(email, password) {

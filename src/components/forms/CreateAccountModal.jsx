@@ -7,6 +7,7 @@ export default function CreateAccountModal({ isOpen, closeModal }) {
     const [ password, setPassword ] = useState("")
     const [ confirmPassword, setConfirmPassword ] = useState("")
     const [ passwordWarning, setPasswordWarning ] = useState(false)
+    const [ errorMessage, setErrorMessage ] = useState("")
 
     const modalRef = useRef(null)
 
@@ -35,14 +36,18 @@ export default function CreateAccountModal({ isOpen, closeModal }) {
         setConfirmPassword(event.target.value)
     }
 
-    function handleCreateAccountWithEmail(event) {
+    async function handleCreateAccountWithEmail(event) {
         event.preventDefault()
-
         if (password === confirmPassword) {
-            authCreateAccountWithEmail(email, password)
-            setEmail("")
-            setPassword("")
-            setConfirmPassword("")
+            try {
+                await authCreateAccountWithEmail(email, password)
+                setErrorMessage("")
+                setEmail("")
+                setPassword("")
+                setConfirmPassword("")
+            } catch (error) {
+                setErrorMessage(error.message)
+            }
         } else {
             setPasswordWarning(true)
         }
@@ -109,8 +114,11 @@ export default function CreateAccountModal({ isOpen, closeModal }) {
                     />
 
                 { passwordWarning && 
-                <p className="password-warning">
+                <p className="error-text">
                 Both password fields must match!</p>}
+
+                { errorMessage && 
+                <p className="error-text"> {errorMessage} </p>}
 
                 <button 
                     id="create-acct-btn" 
